@@ -1,33 +1,31 @@
-variable "ibmcloud_api_key" {
+variable "aws_access_key" {
+  description = "The AWS access key"
   sensitive = true
+}
+
+variable "aws_secret_key" {
+  description = "The AWS secret key"
+  sensitive = true
+}
+
+variable "aws_region" {
+  description = "The AWS region"
+}
+
+variable "aws_eks_cluster_name" {
+  description = "The existing AWS EKS cluster name"
+}
+
+variable "ingress-subdomain" {
+  description = "The ingress subdomain of the AWS EKS cluster"
 }
 
 variable "ibm_entitlement_key" {
+  description = "The IBM entitlement key"
   sensitive = true
 }
 
-variable "apimanager-ca-file" {}
-
-variable "ibmcloud_region" {
-  default = "eu-de"
+variable "apimanager-ca-file" {
+  description = "The file location of the API manager root CA"
 }
 
-variable "ibmcloud_zone" {
-  default = "eu-de-1"
-}
-
-variable "ibmcloud_subnet_cidr" {
-  default = "10.10.0.0/24"
-}
-
-variable "kube_version" {
-  default = "1.24.10"
-}
-
-variable "machine_flavor" {
-  default = "bx2.16x64"
-} 
-
-variable "worker_count" {
-  default = "3"
-}
