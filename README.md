@@ -8,7 +8,9 @@ Make a fork of this repository and update the following:
 
 ### Ingress subdomain
 
-Make sure to update [env/nonprod/gatewaycluster/custom/ingress-subdomain.yaml](env/nonprod/gatewaycluster/custom/ingress-subdomain.yaml) to have the host name for your ingress subdomain. Your cluster needs to meet the ingress requirements specified here: https://www.ibm.com/docs/en/api-connect/10.0.5.x_lts?topic=deployment-kubernetes-ingress-controller-prerequisites
+Make sure to update [env/nonprod/gatewaycluster/custom/ingress-subdomain.yaml](env/nonprod/gatewaycluster/custom/ingress-subdomain.yaml) to have the host name for your ingress subdomain. 
+
+Your cluster needs to have the nginx ingress controller with SSL passthrough enabled. See: https://www.ibm.com/docs/en/api-connect/10.0.5.x_lts?topic=deployment-kubernetes-ingress-controller-prerequisites
 
 ### Gitops repository
 
