@@ -3,8 +3,8 @@ kind: GatewayCluster
 metadata:
   name: gateway-cluster
 spec:
-  version: 10.0.5.2
+  version: 10.0.6.0
   license:
     accept: true
-    license: L-GVEN-GFUPVE
+    license: L-NRHE-WFD7EY  # CP4I
     use: production
