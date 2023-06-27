@@ -2,10 +2,11 @@ apiVersion: gateway.apiconnect.ibm.com/v1beta1
 kind: GatewayCluster
 metadata:
   name: gateway-cluster
-  labels:
-    app.kubernetes.io/instance: gateway
-    app.kubernetes.io/managed-by: ibm-apiconnect
-    app.kubernetes.io/name: gateway-cluster
+  labels: {
+    app.kubernetes.io/instance: "gateway",
+    app.kubernetes.io/managed-by: "ibm-apiconnect",
+    app.kubernetes.io/name: "gateway-cluster"
+  }
 spec:
   additionalDomainConfig:
     - certs:
