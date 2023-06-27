@@ -4,6 +4,6 @@ metadata:
   name: gateway-cluster
 spec:
   gatewayEndpoint:
-    ingressClassName: alb
+    ingressClassName: nginx
   gatewayManagerEndpoint:
-    ingressClassName: alb
+    ingressClassName: nginx
