@@ -5,4 +5,4 @@ metadata:
 spec:
   ingestion:
     endpoint:
-      ingressClassName: alb
+      ingressClassName: nginx
