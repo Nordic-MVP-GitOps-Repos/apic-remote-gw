@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/name: datapower-operator
     app.kubernetes.io/managed-by: datapower-operator
 imagePullSecrets:
-- name: ibm-entitlement-key
+- name: datapower-docker-local-cred
 ---
 # Source: datapower-operator/templates/cluster_role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -244,7 +244,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: datapower-operator
-  namespace: apic
+  namespace: default
 roleRef:
   kind: ClusterRole
   name: datapower-operator
@@ -599,7 +599,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: datapower-operator
-  namespace: apic
+  namespace: default
 roleRef:
   kind: Role
   name: datapower-operator
@@ -634,7 +634,7 @@ spec:
         productName: "IBM DataPower Operator"
         productMetric: "FREE"
         productChargedContainers: ""
-        productVersion: 1.6.3
+        productVersion: 1.7.0
     spec:
       affinity:
         nodeAffinity:
@@ -660,13 +660,14 @@ spec:
       containers:
         - name: datapower-operator
           # Replace this with the built image name
-          image: icr.io/cpopen/datapower-operator:1.6.3
+          image: icr.io/cpopen/datapower-operator:1.7.0
           command:
           - /datapower-operator
           args:
           - "--leader-elect"
           - "--zap-encoder=json"
           - "--zap-log-level=info"
+          - "--zap-time-encoding=rfc3339nano"
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE
@@ -688,7 +689,7 @@ spec:
             - name: IBM_ENTITLED_REGISTRY
               value: "cp.icr.io/cp/datapower"
             - name: IBM_FREE_REGISTRY_DATAPOWER
-              value: "icr.io/integration/datapower"
+              value: "icr.io/cpopen/datapower"
             - name: IBM_FREE_REGISTRY_CPOPEN
               value: "icr.io/cpopen"
           resources:
@@ -707,3 +708,4 @@ spec:
             allowPrivilegeEscalation: false
       securityContext:
         runAsNonRoot: true
+
