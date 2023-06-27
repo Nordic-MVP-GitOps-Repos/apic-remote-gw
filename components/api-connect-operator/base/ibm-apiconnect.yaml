@@ -5,7 +5,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
-    productVersion: 10.0.5.2-ifix1-124
+    productVersion: 10.0.6.0-3968
   labels:
     control-plane: ibm-apiconnect
   name: apic
@@ -283,6 +283,12 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - events.k8s.io
+  resources:
+  - events
+  verbs:
+  - create
 - apiGroups:
   - gateway.apiconnect.ibm.com
   resources:
@@ -750,40 +756,12 @@ rules:
   - list
   - watch
 - apiGroups:
-  - ""
+  - apiextensions.k8s.io
   resources:
-  - services
+  - customresourcedefinitions
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - cert-manager.io
-  resources:
-  - certificates
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
   - watch
 - apiGroups:
   - cert-manager.io
@@ -801,48 +779,6 @@ rules:
   - get
   - list
 - apiGroups:
-  - eventendpointmanager.apiconnect.ibm.com
-  resources:
-  - eventendpointmanagers
-  - eventendpointmanagers/finalizers
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - eventendpointmanager.apiconnect.ibm.com
-  resources:
-  - eventendpointmanagers/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - eventgateway.apiconnect.ibm.com
-  resources:
-  - eventgatewayclusters
-  - eventgatewayclusters/finalizers
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - eventgateway.apiconnect.ibm.com
-  resources:
-  - eventgatewayclusters/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
   - networking.k8s.io
   resources:
   - ingressclasses
@@ -850,17 +786,12 @@ rules:
   - get
   - list
 - apiGroups:
-  - route.openshift.io
+  - operators.coreos.com
   resources:
-  - routes
-  - routes/custom-host
+  - operatorconditions
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
   - storage.k8s.io
@@ -1048,7 +979,7 @@ metadata:
     productID: 2c717d4ecc924aa5ac345015b55492eb
     productMetric: FREE
     productName: IBM API Connect Enterprise
-    productVersion: 10.0.5.2-ifix1-124
+    productVersion: 10.0.6.0-3968
   name: ibm-apiconnect
   namespace: apic
 spec:
@@ -1069,7 +1000,7 @@ spec:
         productID: 2c717d4ecc924aa5ac345015b55492eb
         productMetric: FREE
         productName: IBM API Connect Enterprise
-        productVersion: 10.0.5.2-ifix1-124
+        productVersion: 10.0.6.0-3968
       labels:
         app.kubernetes.io/component: apiconnect-operator
         app.kubernetes.io/instance: ibm-apiconnect
@@ -1110,7 +1041,7 @@ spec:
               fieldPath: metadata.uid
         - name: APPLIANCE
           value: "false"
-        image: icr.io/cpopen/ibm-apiconnect-operator@sha256:4fe28e4e9ba2adf902ca583fa2728429fada34126236e3030f421dd261db94ad
+        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator@sha256:754fcf48b2c75c1726394833d8b4f2f6e83d136b47bdeb636c2c40579ef9ba28
         name: ibm-apiconnect
         ports:
         - containerPort: 9443
@@ -1147,7 +1078,7 @@ spec:
           value: ibm-apiconnect-mutating-webhook-configuration
         - name: VALIDATING_WEBHOOK
           value: ibm-apiconnect-validating-webhook-configuration
-        image: icr.io/cpopen/ibm-apiconnect-operator-init@sha256:016a714d0dcf3a42123c82598cd376126799b15b81795d29b520e31973064988
+        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator-init@sha256:3a0e39c1ae568555bea2549e2cd2505c1aeeef9a4df24d07f71a408035987902
         name: webhook
         resources:
           limits:
@@ -1187,7 +1118,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.uid
-        image: icr.io/cpopen/ibm-apiconnect-webhook-delete@sha256:5bd9a827b191508f465d62ef208c5be9698ef50bf0376e75c9b0b15c06080a1e
+        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-webhook-delete@sha256:16b5b9101cdfb579d6e1e82b4261f668bc3fa87bcc93a5cc800b78b25a410ab1
         name: webhook-delete
         resources:
           limits:
@@ -1378,26 +1309,6 @@ webhooks:
     resources:
     - apiconnectclusters
   sideEffects: None
-- admissionReviewVersions:
-  - v1
-  clientConfig:
-    service:
-      name: ibm-apiconnect-webhook-service
-      namespace: apic
-      path: /mutate-eventendpointmanager-apiconnect-ibm-com-v1beta1-eventendpointmanager
-  failurePolicy: Fail
-  name: meventendpointmanager.kb.io
-  rules:
-  - apiGroups:
-    - eventendpointmanager.apiconnect.ibm.com
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - eventendpointmanagers
-  sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -1424,26 +1335,6 @@ webhooks:
     - UPDATE
     resources:
     - analyticsclusters
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  clientConfig:
-    service:
-      name: ibm-apiconnect-webhook-service
-      namespace: apic
-      path: /validate-eventgateway-apiconnect-ibm-com-v1beta1-eventgatewaycluster
-  failurePolicy: Fail
-  name: veventgatewaycluster.kb.io
-  rules:
-  - apiGroups:
-    - eventgateway.apiconnect.ibm.com
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - eventgatewayclusters
   sideEffects: None
 - admissionReviewVersions:
   - v1
@@ -1647,24 +1538,4 @@ webhooks:
     - UPDATE
     resources:
     - apiconnectclusters
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  clientConfig:
-    service:
-      name: ibm-apiconnect-webhook-service
-      namespace: apic
-      path: /validate-eventendpointmanager-apiconnect-ibm-com-v1beta1-eventendpointmanager
-  failurePolicy: Fail
-  name: veventendpointmanager.kb.io
-  rules:
-  - apiGroups:
-    - eventendpointmanager.apiconnect.ibm.com
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - eventendpointmanagers
   sideEffects: None
