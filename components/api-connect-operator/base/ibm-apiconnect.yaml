@@ -1041,7 +1041,7 @@ spec:
               fieldPath: metadata.uid
         - name: APPLIANCE
           value: "false"
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator@sha256:754fcf48b2c75c1726394833d8b4f2f6e83d136b47bdeb636c2c40579ef9ba28
+        image: icr.io/cpopen/ibm-apiconnect-operator@sha256:754fcf48b2c75c1726394833d8b4f2f6e83d136b47bdeb636c2c40579ef9ba28
         name: ibm-apiconnect
         ports:
         - containerPort: 9443
@@ -1078,7 +1078,7 @@ spec:
           value: ibm-apiconnect-mutating-webhook-configuration
         - name: VALIDATING_WEBHOOK
           value: ibm-apiconnect-validating-webhook-configuration
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator-init@sha256:3a0e39c1ae568555bea2549e2cd2505c1aeeef9a4df24d07f71a408035987902
+        image: icr.io/cpopen/ibm-apiconnect-operator-init@sha256:3a0e39c1ae568555bea2549e2cd2505c1aeeef9a4df24d07f71a408035987902
         name: webhook
         resources:
           limits:
@@ -1118,7 +1118,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.uid
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-webhook-delete@sha256:16b5b9101cdfb579d6e1e82b4261f668bc3fa87bcc93a5cc800b78b25a410ab1
+        image: icr.io/cpopen/ibm-apiconnect-webhook-delete@sha256:16b5b9101cdfb579d6e1e82b4261f668bc3fa87bcc93a5cc800b78b25a410ab1
         name: webhook-delete
         resources:
           limits:
