@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/name: datapower-operator
     app.kubernetes.io/managed-by: datapower-operator
 imagePullSecrets:
-- name: datapower-docker-local-cred
+- name: ibm-entitlement-key
 ---
 # Source: datapower-operator/templates/cluster_role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -244,7 +244,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: datapower-operator
-  namespace: default
+  namespace: apic
 roleRef:
   kind: ClusterRole
   name: datapower-operator
@@ -599,7 +599,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: datapower-operator
-  namespace: default
+  namespace: apic
 roleRef:
   kind: Role
   name: datapower-operator
