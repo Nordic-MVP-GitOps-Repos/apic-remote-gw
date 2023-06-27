@@ -2,6 +2,11 @@ apiVersion: gateway.apiconnect.ibm.com/v1beta1
 kind: GatewayCluster
 metadata:
   name: gateway-cluster
+  labels: {
+    app.kubernetes.io/instance: "gateway",
+    app.kubernetes.io/managed-by: "ibm-apiconnect",
+    app.kubernetes.io/name: "gateway-cluster"
+  }
 spec:
   additionalDomainConfig:
     - certs:
@@ -17,6 +22,10 @@ spec:
     secretName: gateway-peering
   apicGatewayServiceTLS:
     secretName: gateway-service
+  #mgmtPlatformEndpointCASecret:
+  #  secretName: $PLATFORM_CA_SECRET # Usually ingress-ca
+  #mgmtPlatformEndpointSvcCASecret:
+  #  secretName:  # Usually management-ca
   apicGatewayServiceV5CompatibilityMode: false
   gatewayEndpoint:
     annotations:
